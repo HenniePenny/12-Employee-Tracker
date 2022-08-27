@@ -20,8 +20,8 @@ VALUES  ("Orella", "Abthorpe", 1),
         ("Kimmy", "Burdus", 3),
         ("Catarina", "Waddilove", 4, 3),
         ("Elihu", "Abbotson", 5),
-        ("Frederico", "Guillou", 7),
-        ("Phillie", "Puttnam", 3),
+        ("Frederico", "Guillou", 6, 5),
+        ("Phillie", "Puttnam", 7),
         ("Werner", "Riccardo", 8, 7);
         
   
