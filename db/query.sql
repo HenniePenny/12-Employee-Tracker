@@ -8,3 +8,6 @@ LEFT JOIN role
 ON department.department_id = role.department_id
 ORDER BY role.department_id;
 
+/*query for "view all employees"*/
+SELECT * FROM
+

@@ -4,40 +4,40 @@ const mainQuestionsMenu = [
     message: "What would you like to do?",
     choices: [
       {
-        value: "viewAllEmp"
-        name: "View all employees."
+        value: "viewAllEmp",
+        name: "View all employees.",
       },
       {
-        value: "addEmp"
-        name: "Add an employee."
+        value: "addEmp",
+        name: "Add an employee.",
       },
       {
-        value: "updateEmpRole"
-        name: "Update employee role."
+        value: "updateEmpRole",
+        name: "Update employee role.",
       },
       {
-        value: "viewAllRoles"
-        name: "View all roles."
+        value: "viewAllRoles",
+        name: "View all roles.",
       },
       {
-        value: "addRole"
-        name: "Add a role."
+        value: "addRole",
+        name: "Add a role.",
       },
       {
-        value: "viewAllDept"
-        name: "View all departments."
+        value: "viewAllDept",
+        name: "View all departments.",
       },
       {
-        value: "viewEmpByDept"
-        name: "View employees sorted by departments."
+        value: "viewEmpByDept",
+        name: "View employees sorted by departments.",
       },
       {
-        value: "addDept"
-        name: "Add a new department."
+        value: "addDept",
+        name: "Add a new department.",
       },
       {
-        value: "quit"
-        name: "Quit."
+        value: "quit",
+        name: "Quit.",
       },
     ],
   },
@@ -59,7 +59,15 @@ const addNewEmp = [
     name: "newEmpRole",
     message: "What is your new employee's role?",
     //!how to update?
-    choices: ["HR Director", "Director Finance", "Accountant", "Director Legal", "Lawyer", "Sales Lead", "Salesperson"]
+    choices: [
+      "HR Director",
+      "Director Finance",
+      "Accountant",
+      "Director Legal",
+      "Lawyer",
+      "Sales Lead",
+      "Salesperson",
+    ],
   },
 ];
 
@@ -69,34 +77,51 @@ const updateEmpRole = [
     name: "updateEmpRoleNames",
     message: "Which employee's role would you like to update?",
     //!how to update?
-    choices: ["Orella Abthorpe", "Immanuel Ozanne", "Kimmy Burdus", "Catarina Waddilove", "Elihu Abbotson", "Frederico Guillou", "Phillie Puttnam", "Werner Riccardo"]
+    choices: [
+      "Orella Abthorpe",
+      "Immanuel Ozanne",
+      "Kimmy Burdus",
+      "Catarina Waddilove",
+      "Elihu Abbotson",
+      "Frederico Guillou",
+      "Phillie Puttnam",
+      "Werner Riccardo",
+    ],
   },
   {
     type: "list",
     name: "updateEmpRoleSelect",
     message: "Which role to you want to assign to the selected employee?",
     //!how to update?
-    choices: ["HR Director", "Director Finance", "Accountant", "Director Legal", "Lawyer", "Sales Lead", "Salesperson"]
-  }
+    choices: [
+      "HR Director",
+      "Director Finance",
+      "Accountant",
+      "Director Legal",
+      "Lawyer",
+      "Sales Lead",
+      "Salesperson",
+    ],
+  },
 ];
 
 const addNewRole = [
   {
     type: "input",
     name: "newRoleName",
-    message: "What is the name of the new role?"
+    message: "What is the name of the new role?",
   },
   {
     type: "input",
     name: "newRoleSalary",
-    message: "What is the salary of the new role?"
+    message: "What is the salary of the new role?",
   },
   {
     type: "list",
     name: "newRoleDept",
-    message: "What department does the new role belong to?"
+    message: "What department does the new role belong to?",
     //!how to update?
-    choices: ["Human Resources", "Accounting/Finance", "Legal", "Sales"]
+    choices: ["Human Resources", "Accounting/Finance", "Legal", "Sales"],
   },
 ];
 
@@ -104,8 +129,8 @@ const addNewDept = [
   {
     type: "input",
     name: "newDept",
-    message: "What is the name of the new department?"
-  }
+    message: "What is the name of the new department?",
+  },
 ];
 
 module.exports = {
@@ -113,5 +138,5 @@ module.exports = {
   addNewEmp,
   updateEmpRole,
   addNewRole,
-  addNewDept
+  addNewDept,
 };
