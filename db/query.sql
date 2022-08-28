@@ -9,5 +9,14 @@ ON department.department_id = emp_role.department_id
 ORDER BY emp_role.department_id;
 
 --query for "view all employees"
-SELECT  FROM
-
+SELECT 
+  employee.employee_id, 
+  employee.first_name, 
+  employee.last_name, 
+  emp_role.title, 
+  department.dept_name, 
+  emp_role.salary, 
+  CONCAT(employee.first_name + employee.last_name) AS manager WHERE employee.manager_id = employee_id
+FROM department
+LEFT JOIN emp_role ON emp_role.department_id = department.department_id
+LEFT JOIN employee ON employee.role_id = emp_role.role_id;
