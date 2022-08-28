@@ -16,7 +16,8 @@ SELECT
   emp_role.title, 
   department.dept_name, 
   emp_role.salary, 
-  CONCAT(employee.first_name + employee.last_name) AS manager WHERE employee.manager_id = employee_id
-FROM department
-LEFT JOIN emp_role ON emp_role.department_id = department.department_id
-LEFT JOIN employee ON employee.role_id = emp_role.role_id;
+  CONCAT(manager.first_name, " ", manager.last_name) AS manager
+FROM employee
+LEFT JOIN employee AS manager ON employee.manager_id = manager.employee_id
+LEFT JOIN emp_role ON employee.role_id = emp_role.role_id
+LEFT JOIN department ON emp_role.department_id = department.department_id;

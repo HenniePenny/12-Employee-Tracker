@@ -1,6 +1,7 @@
 const mainQuestionsMenu = [
   {
     type: "list",
+    name: "menuAll",
     message: "What would you like to do?",
     choices: [
       {
