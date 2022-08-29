@@ -79,14 +79,13 @@ function viewAllDept() {
 }
 
 function addNewRole() {
-  console.log("hellooooo!");
   db.query("SELECT dept_name FROM department", function (err, results) {
     if (err) {
       console.log(err);
     }
-    console.log(results);
+    // console.log(results);
     const departments = results.map((result) => result["dept_name"]);
-    console.log(departments);
+    // console.log(departments);
     inquirer
       .prompt([
         {
@@ -107,8 +106,11 @@ function addNewRole() {
         },
       ])
       .then((answers) => {
-        // db.query("");
-        console.log(answers);
+        db.query(
+          "INSERT INTO emp_role (title, salary, department_id) VALUES (newRoleName, newRoleSalary, newRoleDept)"
+        );
+        console.log(`Added ${answers.newRoleName} to the database`);
+        init();
       });
   });
 }
