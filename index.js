@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const db = require("./utils/db");
+require("dotenv").config();
 
 const { mainQuestionsMenu } = require("./utils/questions");
 
@@ -20,6 +21,10 @@ const init = () => {
 
       case "addDepartment":
         addDepartment();
+        break;
+
+      case "addRole":
+        addNewRole();
         break;
 
       case "quit":
@@ -67,9 +72,44 @@ function viewAllRoles() {
 }
 
 function viewAllDept() {
-  db.query("SELECT * FROM department;", function (err, results) {
+  db.query("SELECT * FROM department", function (err, results) {
     console.table(results);
     init();
+  });
+}
+
+function addNewRole() {
+  console.log("hellooooo!");
+  db.query("SELECT dept_name FROM department", function (err, results) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(results);
+    const departments = results.map((result) => result["dept_name"]);
+    console.log(departments);
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "newRoleName",
+          message: "What is the name of the new role?",
+        },
+        {
+          type: "input",
+          name: "newRoleSalary",
+          message: "What is the salary of the new role?",
+        },
+        {
+          type: "list",
+          name: "newRoleDept",
+          message: "What department does the new role belong to?",
+          choices: departments,
+        },
+      ])
+      .then((answers) => {
+        // db.query("");
+        console.log(answers);
+      });
   });
 }
 
@@ -77,7 +117,8 @@ function addDepartment() {
   inquirer.prompt(addNewDept).then((answersAddNewDept) => {
     db.query("INSERT INTO department (dept_name) VALUE (?)", function () {
       answersAddNewDept.newDept;
-    });
+      //!and push to choices array!!!
+    }).then();
     console.log(`Added ${answersAddNewDept.newDept} to the database.`);
   });
 }
