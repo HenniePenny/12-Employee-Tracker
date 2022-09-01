@@ -79,40 +79,53 @@ function viewAllDept() {
 }
 
 function addNewRole() {
-  db.query("SELECT dept_name FROM department", function (err, results) {
-    if (err) {
-      console.log(err);
+  db.query("SELECT dept_name, department_id FROM department").then(
+    (results) => {
+      console.log(results);
+      const departments = results.map((result) => ({
+        name: result["dept_name"],
+        value: result["department_id"],
+      }));
+      console.log(departments);
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "newRoleName",
+            message: "What is the name of the new role?",
+          },
+          {
+            type: "input",
+            name: "newRoleSalary",
+            message: "What is the salary of the new role?",
+          },
+          {
+            type: "list",
+            name: "newRoleDept",
+            message: "What department does the new role belong to?",
+            choices: departments,
+          },
+        ])
+        .then((answers) => {
+          console.log(answers);
+          db.query(
+            "INSERT INTO emp_role (title, salary, department_id) VALUES (?, ?, ?)",
+            [answers.newRoleName, answers.newRoleSalary, answers.newRoleDept],
+            (err, res) => {
+              console.log(res);
+              if (err) {
+                console.log("An error ocurred. Please try again later.");
+                return;
+              } else {
+                console.log("The role has been added to the data base.");
+              }
+            }
+          );
+          console.log(`Added ${answers.newRoleName} to the database`);
+          init();
+        });
     }
-    // console.log(results);
-    const departments = results.map((result) => result["dept_name"]);
-    // console.log(departments);
-    inquirer
-      .prompt([
-        {
-          type: "input",
-          name: "newRoleName",
-          message: "What is the name of the new role?",
-        },
-        {
-          type: "input",
-          name: "newRoleSalary",
-          message: "What is the salary of the new role?",
-        },
-        {
-          type: "list",
-          name: "newRoleDept",
-          message: "What department does the new role belong to?",
-          choices: departments,
-        },
-      ])
-      .then((answers) => {
-        db.query(
-          "INSERT INTO emp_role (title, salary, department_id) VALUES (newRoleName, newRoleSalary, newRoleDept)"
-        );
-        console.log(`Added ${answers.newRoleName} to the database`);
-        init();
-      });
-  });
+  );
 }
 
 function addDepartment() {
