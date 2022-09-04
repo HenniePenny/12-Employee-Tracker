@@ -79,8 +79,9 @@ function viewAllDept() {
 }
 
 function addNewRole() {
-  db.query("SELECT dept_name, department_id FROM department").then(
-    (results) => {
+  db.promise()
+    .query("SELECT dept_name, department_id FROM department")
+    .then(([results]) => {
       console.log(results);
       const departments = results.map((result) => ({
         name: result["dept_name"],
@@ -119,13 +120,12 @@ function addNewRole() {
               } else {
                 console.log("The role has been added to the data base.");
               }
+              console.log(`Added ${answers.newRoleName} to the database`);
+              init();
             }
           );
-          console.log(`Added ${answers.newRoleName} to the database`);
-          init();
         });
-    }
-  );
+    });
 }
 
 function addDepartment() {
@@ -136,6 +136,59 @@ function addDepartment() {
     }).then();
     console.log(`Added ${answersAddNewDept.newDept} to the database.`);
   });
+}
+
+//!update
+function addNewEmployee() {
+  db.promise()
+    .query("SELECT role_id, title FROM emp_role")
+    .then(([results]) => {
+      const roles = results.map((result) => ({
+        name: result["title"],
+        value: result["role_id"],
+      }));
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "newEmpFirstName",
+            message: "Please type your new employee's first name:",
+          },
+          {
+            type: "input",
+            name: "newEmpLastName",
+            message: "Please type the new employee's last name:",
+          },
+          {
+            type: "list",
+            name: "newEmpRole",
+            message: "What is your new employee's role?",
+            choices: roles,
+          },
+          //!manager
+        ])
+        .then((answers) => {
+          console.log(answers);
+          db.query(
+            "INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)",
+            [
+              answers.newEmpFirstName,
+              answers.newEmpLastName,
+              answers.newEmpRole,
+            ],
+            (err, res) => {
+              console.log(res);
+              if (err) {
+                console.log("An error ocurred. Please try again later.");
+                return;
+              } else {
+                console.log("The employee has been added to the data base.");
+              }
+              init();
+            }
+          );
+        });
+    });
 }
 
 init();
