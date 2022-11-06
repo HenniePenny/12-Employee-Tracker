@@ -9,32 +9,32 @@ const mainQuestionsMenu = [
         name: "View all employees.",
       },
       {
-        value: "addEmp",
-        name: "Add an employee.",
-      },
-      {
-        value: "updateEmpRole",
-        name: "Update employee role.",
-      },
-      {
         value: "viewAllRoles",
         name: "View all roles.",
-      },
-      {
-        value: "addRole",
-        name: "Add a role.",
       },
       {
         value: "viewAllDept",
         name: "View all departments.",
       },
       {
-        value: "viewEmpByDept",
-        name: "View employees sorted by departments.",
+        value: "addEmp",
+        name: "Add an employee.",
       },
       {
         value: "addDept",
         name: "Add a new department.",
+      },
+      {
+        value: "addRole",
+        name: "Add a role.",
+      },
+      {
+        value: "updateEmpRole",
+        name: "Update employee role.",
+      },
+      {
+        value: "viewEmpByDept",
+        name: "View employees sorted by departments.",
       },
       {
         value: "quit",
