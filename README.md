@@ -31,3 +31,4 @@ THEN I am prompted to select an employee to update and their new role and this i
 ## Links
 
 - [GitHub Repository](https://github.com/HenniePenny/12-Employee-Tracker)
+- [Link to walkthrough video](https://drive.google.com/file/d/1tn90Y2Thv-ZmAr7q2ABB90NjWZISMN8Y/view)
