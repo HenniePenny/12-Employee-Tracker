@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const db = require("./utils/db");
 require("dotenv").config();
 
-const { mainQuestionsMenu } = require("./utils/questions");
+const { mainQuestionsMenu, addNewDept } = require("./utils/questions");
 
 const init = () => {
   inquirer.prompt(mainQuestionsMenu).then((answers) => {
@@ -19,12 +19,16 @@ const init = () => {
         viewAllDept();
         break;
 
-      case "addDepartment":
+      case "addDept":
         addDepartment();
         break;
 
       case "addRole":
-        addNewRole();
+        addANewRole();
+        break;
+
+      case "addEmp":
+        addANewEmployee();
         break;
 
       case "quit":
@@ -78,13 +82,30 @@ function viewAllDept() {
   });
 }
 
-function addNewRole() {
-  db.query("SELECT dept_name FROM department", function (err, results) {
+function addDepartment() {
+  inquirer.prompt(addNewDept).then((answersAddNewDept) => {
+    db.query(
+      "INSERT INTO department (dept_name) VALUES (?)",
+      [answersAddNewDept.newDept],
+      function (error, result) {
+        console.log(`Added ${answersAddNewDept.newDept} to the database.`);
+        init();
+      }
+    );
+  });
+}
+
+//!!!! is this correct?
+function addANewRole() {
+  db.query("SELECT * FROM department", function (err, results) {
     if (err) {
       console.log(err);
     }
     // console.log(results);
-    const departments = results.map((result) => result["dept_name"]);
+    const departments = results.map((result) => ({
+      name: result["dept_name"],
+      value: result["department_id"],
+    }));
     // console.log(departments);
     inquirer
       .prompt([
@@ -107,21 +128,79 @@ function addNewRole() {
       ])
       .then((answers) => {
         db.query(
-          "INSERT INTO emp_role (title, salary, department_id) VALUES (newRoleName, newRoleSalary, newRoleDept)"
+          "INSERT INTO emp_role (title, salary, department_id) VALUES (?, ?, ?)",
+          [answers.newRoleName, answers.newRoleSalary, answers.newRoleDept],
+          (err2, results2) => {
+            console.log(`Added ${answers.newRoleName} to the database`);
+            init();
+          }
         );
-        console.log(`Added ${answers.newRoleName} to the database`);
-        init();
       });
   });
 }
 
-function addDepartment() {
-  inquirer.prompt(addNewDept).then((answersAddNewDept) => {
-    db.query("INSERT INTO department (dept_name) VALUE (?)", function () {
-      answersAddNewDept.newDept;
-      //!and push to choices array!!!
-    }).then();
-    console.log(`Added ${answersAddNewDept.newDept} to the database.`);
+function addANewEmployee() {
+  db.query("SELECT * FROM emp_role", function (err, results) {
+    if (err) {
+      console.log(err);
+    }
+    // console.log(results);
+    const roles = results.map((result) => ({
+      name: result["title"],
+      value: result["role_id"],
+    }));
+    db.query("SELECT * FROM employee", function (err, results) {
+      if (err) {
+        console.log(err);
+      }
+      // console.log(results);
+      const managers = results.map((result) => ({
+        name: result["first_name"],
+        value: result["employee_id"],
+      }));
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "newEmpFirstName",
+            message: "Please type your new employee's first name:",
+          },
+          {
+            type: "input",
+            name: "newEmpLastName",
+            message: "Please type the new employee's last name:",
+          },
+          {
+            type: "list",
+            name: "newEmpRole",
+            message: "What is your new employee's role?",
+            choices: roles,
+          },
+          {
+            type: "list",
+            name: "newEmpManager",
+            message: "Who is the new employee's manager?",
+            choices: managers,
+          },
+        ])
+        .then((answers) => {
+          db.query(
+            "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+            [
+              answers.newEmpFirstName,
+              answers.newEmpLastName,
+              answers.newEmpRole,
+              answers.newEmpManager,
+            ],
+            (err2, results2) => {
+              console.log(
+                `Added ${answers.newEmpFirstName} ${answers.newEmpLastName} to the database`
+              );
+              init();
+            }
+          );
+        });
+    });
   });
 }
 
