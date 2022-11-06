@@ -22,5 +22,6 @@ LEFT JOIN employee AS manager ON employee.manager_id = manager.employee_id
 LEFT JOIN emp_role ON employee.role_id = emp_role.role_id
 LEFT JOIN department ON emp_role.department_id = department.department_id;
 
+
 --query for "add new department"
-INSERT INTO department (dept_name) VALUE (?)
+INSERT INTO department (dept_name) VALUES (?)
