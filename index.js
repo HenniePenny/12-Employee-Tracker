@@ -32,10 +32,11 @@ const init = () => {
         break;
 
       case "quit":
+        console.info("To quit please press control+c.");
         break;
 
-      default:
-        break;
+      // default:
+      //   break;
     }
   });
 };
@@ -101,12 +102,10 @@ function addANewRole() {
     if (err) {
       console.log(err);
     }
-    // console.log(results);
     const departments = results.map((result) => ({
       name: result["dept_name"],
       value: result["department_id"],
     }));
-    // console.log(departments);
     inquirer
       .prompt([
         {
